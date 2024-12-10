@@ -23,7 +23,7 @@
         <!-- Login and Register Section -->
         <div class="mt-10 bg-white shadow-md rounded-lg p-6 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Login -->
-            <div>
+            <!-- <div>
                 <h2 class="text-xl font-semibold mb-4">Login</h2>
                 <form action="login.php" method="POST">
                     <div class="mb-4">
@@ -38,12 +38,17 @@
                         Log in
                     </button>
                 </form>
-            </div>
+            </div> -->
+            
 
             <!-- Register -->
             <div>
                 <h2 class="text-xl font-semibold mb-4">Register</h2>
-                <form action="register.php" method="POST">
+                <form action="" method="POST">
+                <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium">Username</label>
+                        <input type="text" name="name" id="name" class="w-full p-2 border rounded" required>
+                    </div>
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium">Email</label>
                         <input type="email" name="email" id="email" class="w-full p-2 border rounded" required>
@@ -65,7 +70,50 @@
                     </button>
                 </form>
             </div>
+            <?php
+include './../utils/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+
+    // Check if passwords match
+    if ($password !== $confirm_password) {
+        die("Passwords do not match!");
+    }
+
+    // Hash the password for security
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Check if email already exists
+    $check_email = "SELECT * FROM user WHERE email = '$email'";
+    $result = $conn->query($check_email);
+
+    if ($result->num_rows > 0) {
+        die("Email already exists!");
+    }
+
+    // Insert data into the database (use hashed password)
+    $sql = "INSERT INTO user (name, email, number, password) VALUES ('$name', '$email', '$phone', '$hashed_password')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Registration successful!";
+        // header("Location: login.php"); // Redirect to login page after registration
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
+?>
+
         </div>
+        
+
 
         <!-- Footer Section -->
         <footer class="w-full mt-10 bg-white shadow-md p-6 text-center">
