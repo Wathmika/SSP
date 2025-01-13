@@ -23,9 +23,10 @@
         <!-- Login and Register Section -->
         <div class="mt-10 bg-white shadow-md rounded-lg p-6 w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Login -->
-            <!-- <div>
+            <div>
                 <h2 class="text-xl font-semibold mb-4">Login</h2>
-                <form action="login.php" method="POST">
+                <form action="" method="POST">
+                <input type="hidden" name="login" value="1">
                     <div class="mb-4">
                         <label for="username" class="block text-sm font-medium">Username</label>
                         <input type="text" name="username" id="username" class="w-full p-2 border rounded" required>
@@ -38,13 +39,14 @@
                         Log in
                     </button>
                 </form>
-            </div> -->
+            </div>
             
 
             <!-- Register -->
             <div>
                 <h2 class="text-xl font-semibold mb-4">Register</h2>
                 <form action="" method="POST">
+                <input type="hidden" name="register" value="1">   
                 <div class="mb-4">
                         <label for="name" class="block text-sm font-medium">Username</label>
                         <input type="text" name="name" id="name" class="w-full p-2 border rounded" required>
@@ -70,49 +72,64 @@
                     </button>
                 </form>
             </div>
-            <?php
-include './../utils/db.php';
+        </div>
+        <?php
+require './../utils/db.php'; // Include your database connection file
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['login']) && $_POST['login'] == 1) {
+        // Login functionality
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
-    // Check if passwords match
-    if ($password !== $confirm_password) {
-        die("Passwords do not match!");
-    }
+        $query = "SELECT * FROM user WHERE Name = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        if ($user && password_verify($password, $user['Password'])) {
+            // Login successful
+            session_start();
+            $_SESSION['user_id'] = $user['UserID'];
+            $_SESSION['username'] = $user['Name'];
+            header('Location: ./../index.php');
+            exit();
+        } else {
+            echo 'Invalid username or password.';
+        }
+    } elseif (isset($_POST['register']) && $_POST['register'] == 1) {
+        // Registration functionality
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmPassword = $_POST['confirm_password'];
+        $phone = $_POST['phone'];
 
-    // Check if email already exists
-    $check_email = "SELECT * FROM user WHERE email = '$email'";
-    $result = $conn->query($check_email);
+        if ($password !== $confirmPassword) {
+            echo 'Passwords do not match.';
+            exit();
+        }
 
-    if ($result->num_rows > 0) {
-        die("Email already exists!");
-    }
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    // Insert data into the database (use hashed password)
-    $sql = "INSERT INTO user (name, email, number, password) VALUES ('$name', '$email', '$phone', '$hashed_password')";
+        $query = "INSERT INTO user (Name, Email, Password, Phone_Number) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssss", $name, $email, $hashedPassword, $phone);
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Registration successful!";
-        // header("Location: login.php"); // Redirect to login page after registration
-        exit();
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        if ($stmt->execute()) {
+            header('Location: loginregister.php?message=registration_success');
+            exit();
+        } else {
+            echo 'Error: ' . $conn->error;
+        }
     }
 }
-
-$conn->close();
 ?>
 
-        </div>
-        
+
+       
 
 
         <!-- Footer Section -->
