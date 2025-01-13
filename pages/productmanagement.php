@@ -112,32 +112,60 @@
         </div>
 
         <!-- Products Table -->
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-xl font-bold mb-4">Products</h2>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2">Product ID</th>
-                        <th class="py-2">Name</th>
-                        <th class="py-2">Price</th>
-                        <th class="py-2">Stock Quantity</th>
-                        <th class="py-2">Brain</th>
-                        <th class="py-2">Citriny</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example Row -->
-                    <tr class="text-center">
-                        <td class="py-2">1</td>
-                        <td class="py-2">Product A</td>
-                        <td class="py-2">$19.99</td>
-                        <td class="py-2">50</td>
-                        <td class="py-2">Brain123</td>
-                        <td class="py-2">Citriny123</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Products</h2>
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Product ID</th>
+                <th class="py-2 px-4 border-b">Name</th>
+                <th class="py-2 px-4 border-b">Price</th>
+                <th class="py-2 px-4 border-b">Stock Quantity</th>
+                <th class="py-2 px-4 border-b">Brand</th>
+                <th class="py-2 px-4 border-b">Category</th>
+                <th class="py-2 px-4 border-b">Description</th>
+                <th class="py-2 px-4 border-b">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Include the database connection file
+            require '../utils/db.php';
+
+            // Fetch products from the database
+            $sql = "SELECT * FROM Product";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr class='text-center border-b'>";
+                    echo "<td class='py-2 px-4'>{$row['ProductID']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Name']}</td>";
+                    echo "<td class='py-2 px-4'>\${$row['Price']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['StockQuantity']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Brand']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Category']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Description']}</td>";
+                    echo "<td class='py-2 px-4'>";
+                    if (!empty($row['Thumbnail_IMG'])) {
+                        echo "<img src='{$row['Thumbnail_IMG']}' alt='Product Image' class='w-20 h-20 object-cover mx-auto'>";
+                    } else {
+                        echo "No Image";
+                    }
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='8' class='py-2 px-4 text-center'>No products found</td></tr>";
+            }
+
+            $conn->close(); // Close the database connection
+            ?>
+        </tbody>
+    </table>
+</div>
+
     </div>
 
     <?php

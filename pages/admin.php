@@ -21,61 +21,97 @@
             </div>
         </nav>
 
-        <!-- Users Table -->
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-xl font-bold mb-4">Users</h2>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2">User ID</th>
-                        <th class="py-2">Name</th>
-                        <th class="py-2">Password</th>
-                        <th class="py-2">Pearl Number</th>
-                        <th class="py-2">Email</th>
-                        <th class="py-2">Flexitorion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example Row -->
-                    <tr class="text-center">
-                        <td class="py-2">1</td>
-                        <td class="py-2">John Doe</td>
-                        <td class="py-2">********</td>
-                        <td class="py-2">12345</td>
-                        <td class="py-2">john@example.com</td>
-                        <td class="py-2">Flex123</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <h2 class="text-xl font-bold mb-4">Users</h2>
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">User ID</th>
+                <th class="py-2 px-4 border-b">Name</th>
+                <th class="py-2 px-4 border-b">Password</th>
+                <th class="py-2 px-4 border-b">Phone Number</th>
+                <th class="py-2 px-4 border-b">Email</th>
+                <th class="py-2 px-4 border-b">Registration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Include the database connection file
+            require '../utils/db.php';
 
-        <!-- Orders Table -->
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-xl font-bold mb-4">Orders</h2>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2">Order ID</th>
-                        <th class="py-2">User ID</th>
-                        <th class="py-2">Augurt</th>
-                        <th class="py-2">Status</th>
-                        <th class="py-2">Address</th>
-                        <th class="py-2">Order Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example Row -->
-                    <tr class="text-center">
-                        <td class="py-2">101</td>
-                        <td class="py-2">1</td>
-                        <td class="py-2">Aug123</td>
-                        <td class="py-2">Shipped</td>
-                        <td class="py-2">123 Main St</td>
-                        <td class="py-2">2025-01-01</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            // Fetch users from the database
+            $sql = "SELECT * FROM user";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr class='text-center border-b'>";
+                    echo "<td class='py-2 px-4'>{$row['UserID']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Name']}</td>";
+                    echo "<td class='py-2 px-4'>********</td>"; // Hide the password for security
+                    echo "<td class='py-2 px-4'>{$row['Phone_Number']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Email']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['RegistrationDate']}</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='6' class='py-2 px-4 text-center'>No users found</td></tr>";
+            }
+
+            $conn->close(); // Close the database connection
+            ?>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Orders</h2>
+    <table class="min-w-full bg-white">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Order ID</th>
+                <th class="py-2 px-4 border-b">User ID</th>
+                <th class="py-2 px-4 border-b">Total Amount</th>
+                <th class="py-2 px-4 border-b">Status</th>
+                <th class="py-2 px-4 border-b">Shipping Address</th>
+                <th class="py-2 px-4 border-b">Order Date</th>
+                <th class="py-2 px-4 border-b">Delivery Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Include the database connection file
+            require '../utils/db.php';
+
+            // Fetch orders from the database
+            $sql = "SELECT * FROM `Order`";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr class='text-center border-b'>";
+                    echo "<td class='py-2 px-4'>{$row['Order_ID']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['User_ID']}</td>";
+                    echo "<td class='py-2 px-4'>\${$row['TotalAmount']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['Status']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['ShippingAddress']}</td>";
+                    echo "<td class='py-2 px-4'>{$row['OrderDate']}</td>";
+                    echo "<td class='py-2 px-4'>\${$row['Delivery_Fee']}</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='7' class='py-2 px-4 text-center'>No orders found</td></tr>";
+            }
+
+            $conn->close(); // Close the database connection
+            ?>
+        </tbody>
+    </table>
+</div>
+
 
         <!-- Sales Table -->
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
