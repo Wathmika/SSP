@@ -24,8 +24,8 @@
         <!-- Add Product Form -->
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-xl font-bold mb-4">Add Product</h2>
-            <form action="" method="POST" class="">
-                <input type="hidden" name="addproduct" value="1">
+            <form action="" method="POST" class="" enctype="multipart/form-data">
+                <input type="hidden" name="addproduct" value="1" >
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="product-id">Product ID</label>
@@ -49,7 +49,7 @@
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="product-brain">Product Brand</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product-brain" type="text" placeholder="Product Brain" name="Brand">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product-brain" type="text" placeholder="Product Brand" name="Brand">
                     </div>
                     <div class="col-span-2">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="product-description">Product Description</label>
@@ -57,11 +57,11 @@
                     </div>
                     <div class="col-span-2">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="product-images">Product Images</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product-images" type="file" multiple name="Thumbnail_IMG">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="product-images" type="file" name="Thumbnail_IMG">
                     </div>
                 </div>
                 <div class="mt-6">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Add Product</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="Addproduct">Add Product</button>
                 </div>
             </form>
         </div>
@@ -69,43 +69,44 @@
         <!-- Update Product Form -->
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2 class="text-xl font-bold mb-4">Update Product</h2>
-            <form>
+            <form action="" method="POST" class="" enctype="multipart/form-data">
+            <input type="hidden" name="UpdateProduct" value="1" >
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-id">Product ID</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-id" type="text" placeholder="Product ID">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-id" type="text" placeholder="Product ID" name="ProductID">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-name">Product Name</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-name" type="text" placeholder="Product Name">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-name" type="text" placeholder="Product Name" name="Name">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-price">Product Price</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-price" type="text" placeholder="Product Price">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-price" type="text" placeholder="Product Price" name="Price">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-quantity">Product Quantity</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-quantity" type="text" placeholder="Product Quantity">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-quantity" type="text" placeholder="Product Quantity" name="StockQuantity">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-category">Product Category</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-category" type="text" placeholder="Product Category">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-category" type="text" placeholder="Product Category" name="Category">
                     </div>
                     <div>
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-brain">Product Brand</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-brain" type="text" placeholder="Product Brain">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-brain" type="text" placeholder="Product Brand" name="Brand">
                     </div>
                     <div class="col-span-2">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-description">Product Description</label>
-                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-description" placeholder="Product Description"></textarea>
+                        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-description" placeholder="Product Description" name="Description"></textarea>
                     </div>
                     <div class="col-span-2">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="update-product-images">Product Images</label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-images" type="file" multiple>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="update-product-images" type="file" name="Thumbnail_IMG">
                     </div>
                 </div>
                 <div class="mt-6">
-                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Update Product</button>
+                    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="UpdateProduct">Update Product</button>
                 </div>
             </form>
         </div>
@@ -141,7 +142,7 @@
 
     <?php
 // Include the database connection file
-require_once './utils/db.php';
+require '../utils/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['Addproduct'])) {
@@ -151,7 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $Category = $_POST['Category'] ?? '';
         $Brand = $_POST['Brand'] ?? '';
         $Description = $_POST['Description'] ?? '';
-        $thumbnailIMG = $_POST['imageURL'] ?? ''; // Assuming this is a URL field in your form
+        $photo = '';
+        if(isset($_FILES["Thumbnail_IMG"]) && $_FILES["Thumbnail_IMG"]["error"] == 0) {
+            $target_dir = "../pages/images/";
+            $photo = $target_dir . basename($_FILES["Thumbnail_IMG"]["name"]);
+            move_uploaded_file($_FILES["Thumbnail_IMG"]["tmp_name"], $photo);
+        }
 
         // Validate input
         if (empty($name) || empty($Price) || empty($StockQuantity) || empty($Category) || empty($Brand)) {
@@ -163,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $stmt = $conn->prepare($sql);
             if ($stmt) {
-                $stmt->bind_param("sdissss", $name, $Price, $StockQuantity, $Category, $Brand, $Description, $thumbnailIMG);
+                $stmt->bind_param("sdissss", $name, $Price, $StockQuantity, $Category, $Brand, $Description, $photo);
 
                 // Execute the statement
                 if ($stmt->execute()) {
@@ -184,7 +190,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close(); // Close the database connection
+
+
+
+
+// Include the database connection file
+require '../utils/db.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['UpdateProduct'])) {
+        $productID = $_POST['ProductID'] ?? '';
+        $name = $_POST['Name'] ?? '';
+        $Price = $_POST['Price'] ?? '';
+        $StockQuantity = $_POST['StockQuantity'] ?? '';
+        $Category = $_POST['Category'] ?? '';
+        $Brand = $_POST['Brand'] ?? '';
+        $Description = $_POST['Description'] ?? '';
+        $photo = '';
+
+        if (isset($_FILES["Thumbnail_IMG"]) && $_FILES["Thumbnail_IMG"]["error"] == 0) {
+            $target_dir = "../pages/images/";
+            $photo = $target_dir . basename($_FILES["Thumbnail_IMG"]["name"]);
+            move_uploaded_file($_FILES["Thumbnail_IMG"]["tmp_name"], $photo);
+        }
+
+        // Validate input
+        if (empty($productID)) {
+            $message = "Product ID is required!";
+        } elseif (empty($name) && empty($Price) && empty($StockQuantity) && empty($Category) && empty($Brand) && empty($Description) && empty($photo)) {
+            $message = "No fields to update!";
+        } else {
+            // Dynamically prepare the SQL statement based on provided fields
+            $fieldsToUpdate = [];
+            $params = [];
+            $types = '';
+
+            if (!empty($name)) {
+                $fieldsToUpdate[] = "Name = ?";
+                $params[] = $name;
+                $types .= 's';
+            }
+            if (!empty($Price)) {
+                $fieldsToUpdate[] = "Price = ?";
+                $params[] = $Price;
+                $types .= 'd';
+            }
+            if (!empty($StockQuantity)) {
+                $fieldsToUpdate[] = "StockQuantity = ?";
+                $params[] = $StockQuantity;
+                $types .= 'i';
+            }
+            if (!empty($Category)) {
+                $fieldsToUpdate[] = "Category = ?";
+                $params[] = $Category;
+                $types .= 's';
+            }
+            if (!empty($Brand)) {
+                $fieldsToUpdate[] = "Brand = ?";
+                $params[] = $Brand;
+                $types .= 's';
+            }
+            if (!empty($Description)) {
+                $fieldsToUpdate[] = "Description = ?";
+                $params[] = $Description;
+                $types .= 's';
+            }
+            if (!empty($photo)) {
+                $fieldsToUpdate[] = "Thumbnail_IMG = ?";
+                $params[] = $photo;
+                $types .= 's';
+            }
+
+            $params[] = $productID;
+            $types .= 'i';
+
+            $sql = "UPDATE Product SET " . implode(', ', $fieldsToUpdate) . " WHERE ProductID = ?";
+            $stmt = $conn->prepare($sql);
+
+            if ($stmt) {
+                $stmt->bind_param($types, ...$params);
+
+                // Execute the statement
+                if ($stmt->execute()) {
+                    $message = "Product updated successfully!";
+                } else {
+                    $message = "Error updating Product: " . $stmt->error;
+                }
+
+                $stmt->close(); // Close the statement
+            } else {
+                $message = "Error preparing statement: " . $conn->error;
+            }
+        }
+
+        // Display the message
+        echo '<div class="message">' . htmlspecialchars($message) . '</div>';
+    }
+}
+
+$conn->close(); // Close the database connection
 ?>
+
+
 
 
 

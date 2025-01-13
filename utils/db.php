@@ -5,7 +5,7 @@ $password = ""; // Change this to your MySQL password
 $dbname = "dopediecast"; // Replace with your database name
 
 // Create a connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // Check the connection
 if ($conn->connect_error) {
