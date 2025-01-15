@@ -32,6 +32,7 @@
                 <th class="py-2 px-4 border-b">Phone Number</th>
                 <th class="py-2 px-4 border-b">Email</th>
                 <th class="py-2 px-4 border-b">Registration Date</th>
+                <th class="py-2 px-4 text-left">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -78,6 +79,7 @@
                 <th class="py-2 px-4 border-b">Shipping Address</th>
                 <th class="py-2 px-4 border-b">Order Date</th>
                 <th class="py-2 px-4 border-b">Delivery Fee</th>
+                <th class="py-2 px-4 text-left">Action</th>
             </tr>
         </thead>
         <tbody>

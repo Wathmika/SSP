@@ -1,3 +1,7 @@
+<?php
+// Include the database connection file
+require '../utils/db.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,59 +116,64 @@
         </div>
 
         <!-- Products Table -->
-<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <h2 class="text-xl font-bold mb-4">Products</h2>
-    <table class="min-w-full bg-white">
-        <thead>
-            <tr>
-                <th class="py-2 px-4 border-b">Product ID</th>
-                <th class="py-2 px-4 border-b">Name</th>
-                <th class="py-2 px-4 border-b">Price</th>
-                <th class="py-2 px-4 border-b">Stock Quantity</th>
-                <th class="py-2 px-4 border-b">Brand</th>
-                <th class="py-2 px-4 border-b">Category</th>
-                <th class="py-2 px-4 border-b">Description</th>
-                <th class="py-2 px-4 border-b">Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Include the database connection file
-            require '../utils/db.php';
+        <section class="display-product-table p-6 bg-gray-100">
+    <div class="overflow-x-auto rounded-lg shadow-lg">
+        <?php if (!empty($_SESSION['message'])): ?>
+            <div class="bg-green-100 text-green-700 p-3 mb-4 rounded shadow">
+                <?php echo htmlspecialchars($_SESSION['message']); ?>
+            </div>
+            <?php unset($_SESSION['message']); ?>
+        <?php endif; ?>
 
-            // Fetch products from the database
-            $sql = "SELECT * FROM Product";
-            $result = $conn->query($sql);
+        <table class="w-full bg-white border border-gray-200 rounded-lg">
+            <thead class="bg-blue-500 text-white">
+                <tr>
+                    <th class="py-2 px-4 text-left">Product ID</th>
+                    <th class="py-2 px-4 text-left">Product Image</th>
+                    <th class="py-2 px-4 text-left">Product Name</th>
+                    <th class="py-2 px-4 text-left">Price</th>
+                    <th class="py-2 px-4 text-left">Stock Quantity</th>
+                    <th class="py-2 px-4 text-left">Category</th>
+                    <th class="py-2 px-4 text-left">Brand</th>
+                    <th class="py-2 px-4 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Fetch products from the database
+                $select_products = mysqli_query($conn, "SELECT * FROM `product`");
+                if (mysqli_num_rows($select_products) > 0) {
+                    while ($row = mysqli_fetch_assoc($select_products)) {
+                ?>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="py-3 px-4"><?php echo htmlspecialchars($row['ProductID']); ?></td>
+                        <td class="py-3 px-4">
+                            <img src="<?php echo htmlspecialchars($row['Thumbnail_IMG']); ?>" alt="Product Image" class="w-16 h-16 object-cover rounded">
+                        </td>
+                        <td class="py-3 px-4"><?php echo htmlspecialchars($row['Name']); ?></td>
+                        <td class="py-3 px-4"><?php echo "Rs ", htmlspecialchars($row['Price']); ?></td>
+                        <td class="py-3 px-4"><?php echo htmlspecialchars($row['StockQuantity']); ?></td>
+                        <td class="py-3 px-4"><?php echo htmlspecialchars($row['Category']); ?></td>
+                        <td class="py-3 px-4"><?php echo htmlspecialchars($row['Brand']); ?></td>
+                        <td class="py-3 px-4 space-x-2">
+                        <a href="productmanagement.php?delete=<?php echo htmlspecialchars($row['ProductID']); ?>" 
+                        class="text-red-500 hover:underline" 
+                        onclick="return confirm('Are you sure you want to delete this product?');">
+                        Delete
+                        </a>
 
-            if ($result && $result->num_rows > 0) {
-                // Output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr class='text-center border-b'>";
-                    echo "<td class='py-2 px-4'>{$row['ProductID']}</td>";
-                    echo "<td class='py-2 px-4'>{$row['Name']}</td>";
-                    echo "<td class='py-2 px-4'>\${$row['Price']}</td>";
-                    echo "<td class='py-2 px-4'>{$row['StockQuantity']}</td>";
-                    echo "<td class='py-2 px-4'>{$row['Brand']}</td>";
-                    echo "<td class='py-2 px-4'>{$row['Category']}</td>";
-                    echo "<td class='py-2 px-4'>{$row['Description']}</td>";
-                    echo "<td class='py-2 px-4'>";
-                    if (!empty($row['Thumbnail_IMG'])) {
-                        echo "<img src='{$row['Thumbnail_IMG']}' alt='Product Image' class='w-20 h-20 object-cover mx-auto'>";
-                    } else {
-                        echo "No Image";
+                        </td>
+                    </tr>
+                <?php
                     }
-                    echo "</td>";
-                    echo "</tr>";
+                } else {
+                    echo "<tr><td colspan='8' class='text-center py-4 text-gray-500'>No products available</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='8' class='py-2 px-4 text-center'>No products found</td></tr>";
-            }
-
-            $conn->close(); // Close the database connection
-            ?>
-        </tbody>
-    </table>
-</div>
+                ?>
+            </tbody>
+        </table>
+    </div>
+</section>
 
     </div>
 
@@ -314,9 +323,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Display the message
         echo '<div class="message">' . htmlspecialchars($message) . '</div>';
     }
+
+
+    ob_start();
+
+    // if (session_status() === PHP_SESSION_NONE) {
+    //     session_start();
+    // }
+// Include the database connection file
+require '../utils/db.php';
+
+
+
+if (isset($_GET['delete'])) {
+    $productID = $_GET['delete'];
+
+    if (empty($productID) || !is_numeric($productID)) {
+        $_SESSION['message'] = "Invalid Product ID!";
+        header("Location: productmanagement.php");
+        exit();
+    }
+
+    $sqlCheck = "SELECT ProductID FROM product WHERE ProductID = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    if ($stmtCheck) {
+        $stmtCheck->bind_param("i", $productID);
+        $stmtCheck->execute();
+        $resultCheck = $stmtCheck->get_result();
+
+        if ($resultCheck->num_rows === 0) {
+            $_SESSION['message'] = "Product ID does not exist!";
+            $stmtCheck->close();
+            header("Location: productmanagement.php");
+            exit();
+        }
+        $stmtCheck->close();
+    } else {
+        $_SESSION['message'] = "Error preparing check statement: " . $conn->error;
+        header("Location: productmanagement.php");
+        exit();
+    }
+
+    $sql = "DELETE FROM product WHERE ProductID = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("i", $productID);
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Product deleted successfully!";
+        } else {
+            $_SESSION['message'] = "Error executing DELETE query: " . $stmt->error;
+        }
+        $stmt->close();
+    } else {
+        $_SESSION['message'] = "Error preparing DELETE statement: " . $conn->error;
+    }
+} else {
+    $_SESSION['message'] = "No Product ID provided!";
 }
 
-$conn->close(); // Close the database connection
+// $conn->close();
+// header("Location: productmanagement.php");
+exit();
+
+
+
+
+
+}
+
+$conn->close();
+ // Close the database connection
+ ob_end_flush(); 
 ?>
 </body>
 </html>

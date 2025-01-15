@@ -47,45 +47,81 @@
 
     <!-- Categories Section -->
     <section class="bg-white shadow mt-6 p-6">
-        <h2 class="text-xl font-semibold mb-4">Categories</h2>
-        <div class="grid grid-cols-3 gap-4">
-            <div class="border rounded p-4 text-center">
-                <img src="https://via.placeholder.com/100" alt="Category Image" class="h-24 mx-auto">
-                <p class="mt-2">Category</p>
-            </div>
-            <div class="border rounded p-4 text-center">
-                <img src="https://via.placeholder.com/100" alt="Category Image" class="h-24 mx-auto">
-                <p class="mt-2">Category</p>
-            </div>
-            <div class="border rounded p-4 text-center">
-                <img src="https://via.placeholder.com/100" alt="Category Image" class="h-24 mx-auto">
-                <p class="mt-2">Category</p>
-            </div>
+    <h2 class="text-xl font-semibold mb-4">Categories</h2>
+    <div class="grid grid-cols-3 gap-4">
+        <?php
+        // Include database connection
+        include './utils/db.php'; // Adjust the path as needed
+
+        // Fetch unique categories from the Product table
+        $query = "SELECT DISTINCT Category FROM product WHERE Category IS NOT NULL AND Category != ''";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0):
+            while ($row = $result->fetch_assoc()):
+        ?>
+        <div class="border rounded p-4 text-center">
+            <img src="https://via.placeholder.com/100" alt="Category Image" class="h-24 mx-auto">
+            <p class="mt-2"><?= htmlspecialchars($row['Category']) ?></p>
+            <a href="shop.php?category=<?= urlencode($row['Category']) ?>" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                View <?= htmlspecialchars($row['Category']) ?>
+            </a>
         </div>
-    </section>
+        <?php
+            endwhile;
+        else:
+        ?>
+        <p class="text-gray-500 col-span-3 text-center">No categories available.</p>
+        <?php endif; ?>
+    </div>
+</section>
+
 
     <!-- Sale Items Section -->
-    <section class="bg-white shadow mt-6 p-6">
-        <h2 class="text-xl font-semibold mb-4">Sale Items</h2>
-        <div class="grid grid-cols-4 gap-4">
-            <div class="border rounded p-4 text-center">
-                <img src="https://via.placeholder.com/100" alt="Product Image" class="h-24 mx-auto">
-                <p class="text-red-500 font-bold mt-2">Sale</p>
-                <p class="text-gray-600">$50.00</p>
-                <button class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-                    Add to Cart
-                </button>
-            </div>
-            <div class="border rounded p-4 text-center">
-                <img src="https://via.placeholder.com/100" alt="Product Image" class="h-24 mx-auto">
-                <p class="text-red-500 font-bold mt-2">Sale</p>
-                <p class="text-gray-600">$50.00</p>
-                <button class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-                    Add to Cart
-                </button>
-            </div>
+    <?php
+// Include your database connection
+include './utils/db.php'; // Adjust the path to your db.php file
+
+// Fetch all products from the Product table
+$query = "SELECT ProductID, Name, Price, Thumbnail_IMG FROM Product";
+$result = $conn->query($query);
+
+if ($result->num_rows > 0): ?>
+<section class="bg-white shadow mt-6 p-6">
+    <h2 class="text-xl font-semibold mb-4">All Products</h2>
+    <div class="grid grid-cols-4 gap-4">
+        <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="border rounded p-4 text-center">
+            <!-- Product Image -->
+            <img src="images/<?= htmlspecialchars($row['Thumbnail_IMG']) ?>" 
+                 alt="<?= htmlspecialchars($row['Name']) ?> Image" 
+                 class="h-24 mx-auto">
+            
+            <!-- Product Name -->
+            <p class="font-bold text-gray-700 mt-2"><?= htmlspecialchars($row['Name']) ?></p>
+            
+            <!-- Product Price -->
+            <p class="text-gray-600">$<?= number_format($row['Price'], 2) ?></p>
+            
+            <!-- Add to Cart Button -->
+            <button class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                Add to Cart
+            </button>
         </div>
-    </section>
+        <?php endwhile; ?>
+    </div>
+</section>
+<?php else: ?>
+<p class="text-gray-600 text-center mt-6">No products available.</p>
+<?php endif; ?>
+
+<?php
+// Close the database connection
+$conn->close();
+?>
+
+
+
 
     <!-- Subscription Section -->
     <section class="bg-white shadow mt-6 p-6 text-center">

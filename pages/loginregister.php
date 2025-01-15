@@ -82,6 +82,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
         $query = "SELECT * FROM user WHERE Name = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $username);
@@ -94,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
             $_SESSION['user_id'] = $user['UserID'];
             $_SESSION['username'] = $user['Name'];
-            header('Location: ./../index.php');
+            header('Location: ./userdashboard.php');
             exit();
         } else {
             echo 'Invalid username or password.';
