@@ -3,7 +3,7 @@ session_start();
 include '../utils/db.php';
 
 // Assume a logged-in user (Replace with session ID when implementing authentication)
-$user_id = 1; // Change to $_SESSION['user_id'] when authentication is implemented
+$user_id =  $_SESSION['user_id']; // Change to $_SESSION['user_id'] when authentication is implemented
 
 // Handle adding item to cart
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['product_id'])) {
@@ -101,10 +101,13 @@ $total_price = $total_price_row['total'] ?? 0;
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
         <div class="text-xl font-bold">DOPE DIECAST</div>
         <nav class="flex space-x-4">
-            <a href="#" class="text-gray-600 hover:text-black">HOME</a>
-            <a href="#" class="text-gray-600 hover:text-black">SHOP</a>
+            <a href="./index.php" class="text-gray-600 hover:underline">HOME</a>
+            <a href="./pages/userdashboard.php" class="text-gray-600 hover:underline">ACCOUNT</a>
             <a href="#" class="text-gray-600 hover:text-black">ABOUT</a>
             <a href="#" class="text-gray-600 hover:text-black">CONTACT</a>
+            <a href="./loginregister.php">
+                <button class="bg-black text-white px-4 py-2 rounded">Logout</button>
+            </a>
         </nav>
     </div>
 </header>

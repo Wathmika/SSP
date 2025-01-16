@@ -1,5 +1,5 @@
 
-
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +15,8 @@
     <header class="bg-white shadow-md p-4 flex justify-between items-center">
         <h1 class="text-xl font-bold">DOPE DIECAST</h1>
         <nav class="space-x-4">
-            <a href="#" class="text-gray-600 hover:underline">Home</a>
-            <a href="#" class="text-gray-600 hover:underline">Shop</a>
+            <a href="./index.php" class="text-gray-600 hover:underline">HOME</a>
+            <a href="./pages/userdashboard.php" class="text-gray-600 hover:underline">ACCOUNT</a>
             <a href="#" class="text-gray-600 hover:underline">About</a>
             <a href="#" class="text-gray-600 hover:underline">Contact</a>
         </nav>
@@ -24,6 +24,9 @@
             <input type="text" placeholder="Search" class="p-2 border rounded">
             <a href="#" class="text-gray-600 hover:text-gray-900">🛒</a>
         </div>
+        <a href="./pages/loginregister.php">
+                    <button class="bg-black text-white px-4 py-2 rounded">Logout</button>
+        </a>
     </header>
 
     <!-- Banner Section -->
@@ -89,6 +92,7 @@
 
     <!-- Sale Items Section -->
     <<?php
+    
 // Include your database connection
 include './utils/db.php';
 $query = "SELECT ProductID, Name, Price, Thumbnail_IMG FROM Product";
@@ -110,6 +114,13 @@ if ($result->num_rows > 0): ?>
             
             <!-- Product Price -->
             <p class="text-gray-600">$<?= number_format($row['Price'], 2) ?></p>
+
+            <a href="./pages/productdetail.php?product_id=<?php echo $row['ProductID']; ?>">
+                <button type="submit" class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                    View
+                </button>
+            </a>
+
             
             <!-- Add to Cart Button -->
             <form action="/SSP/pages/cart.php" method="POST">

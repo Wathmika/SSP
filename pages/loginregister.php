@@ -12,12 +12,12 @@
         <!-- Navbar -->
         <header class="w-full bg-white shadow p-4 flex justify-between items-center">
             <h1 class="text-xl font-bold">DOPE DIECAST</h1>
-            <div class="space-x-4">
+            <!-- <div class="space-x-4">
                 <a href="#" class="text-gray-600 hover:underline">Home</a>
                 <a href="#" class="text-gray-600 hover:underline">Shop</a>
                 <a href="#" class="text-gray-600 hover:underline">About</a>
                 <a href="#" class="text-gray-600 hover:underline">Contact</a>
-            </div>
+            </div> -->
         </header>
 
         <!-- Login and Register Section -->
@@ -74,7 +74,7 @@
             </div>
         </div>
         <?php
-require './../utils/db.php'; // Include your database connection file
+require '../utils/db.php'; // Include your database connection file
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login']) && $_POST['login'] == 1) {
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_start();
             $_SESSION['user_id'] = $user['UserID'];
             $_SESSION['username'] = $user['Name'];
-            header('Location: ./userdashboard.php');
+            header('Location: ../index.php');
             exit();
         } else {
             echo 'Invalid username or password.';
@@ -110,19 +110,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirm_password'];
         $phone = $_POST['phone'];
-
+    
         if ($password !== $confirmPassword) {
             echo 'Passwords do not match.';
             exit();
         }
-
+    
+        // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
+    
+        // Insert the user into the database
         $query = "INSERT INTO user (Name, Email, Password, Phone_Number) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("ssss", $name, $email, $hashedPassword, $phone);
-
+    
         if ($stmt->execute()) {
+            // Retrieve the UserID of the newly created user
+            $userID = $stmt->insert_id;
+    
+            // Store the UserID in session
+            $_SESSION['user_id'] = $userID;
+    
+            // Redirect to user dashboard
             header('Location: loginregister.php?message=registration_success');
             exit();
         } else {

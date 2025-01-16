@@ -3,7 +3,7 @@ session_start();
 include '../utils/db.php'; // Include the database connection
 
 // Simulate logged-in user ID (use actual session/user logic in a real application)
-$UserId = 9; // Example user ID
+$UserId = $_SESSION['user_id'] ;  // Example user ID
 
 // Fetch user details function
 function fetchUserDetails($conn, $UserId) {
@@ -54,6 +54,16 @@ if (isset($_POST['btnupdate'])) {
     } else {
         echo "<p class='text-red-500'>Failed to update account: " . $conn->error . "</p>";
     }
+session_start();
+
+// Destroy all session data
+session_unset();
+session_destroy();
+
+// Redirect to login page (or homepage)
+header("Location: ./loginregister.php");
+exit();
+
 
     
 }
@@ -73,8 +83,8 @@ if (isset($_POST['btnupdate'])) {
             <h1 class="text-xl font-bold">DOPE DIECAST</h1>
             <nav>
                 <ul class="flex space-x-6">
-                    <li><a href="#" class="hover:underline">HOME</a></li>
-                    <li><a href="#" class="hover:underline">SHOP</a></li>
+                    <li><a href="../index.php" class="hover:underline">HOME</a></li>
+                    <li><a href="./userdashboard.php" class="hover:underline">ACCOUNT</a></li>
                     <li><a href="#" class="hover:underline">ABOUT</a></li>
                     <li><a href="#" class="hover:underline">CONTACT</a></li>
                 </ul>
@@ -91,9 +101,15 @@ if (isset($_POST['btnupdate'])) {
         <section class="bg-white p-6 rounded shadow">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-bold">My Account</h2>
-                <button class="bg-black text-white px-4 py-2 rounded">Logout</button>
+                <a href="./loginregister.php">
+                    <button class="bg-black text-white px-4 py-2 rounded">Logout</button>
+                </a>
+
             </div>
-            <p class="mt-2">Hello!</p>
+            <p class="mt-2">Hello! <?php 
+        echo  $_SESSION['username'];
+        ?></p>
+
         </section>
 
 <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

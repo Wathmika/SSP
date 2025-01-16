@@ -1,9 +1,41 @@
+<?php
+// Include the database connection
+include '../utils/db.php';
+
+// Validate Product ID
+if (!isset($_GET['product_id']) || empty($_GET['product_id']) || !is_numeric($_GET['product_id'])) {
+    die("<p class='text-red-500'>Invalid product request.</p>");
+}
+$productID = intval($_GET['product_id']);
+
+// Fetch product details
+$stmt = $conn->prepare("SELECT * FROM Product WHERE ProductID = ?");
+$stmt->bind_param("i", $productID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $product = $result->fetch_assoc();
+} else {
+    die("<p class='text-red-500'>Product not found!</p>");
+}
+
+// Set default image if none exists
+$thumbnail = !empty($product['Thumbnail_IMG']) ? $product['Thumbnail_IMG'] : 'default-image.jpg';
+
+// Format prices
+$price = number_format($product['Price'], 2);
+$discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price'] > 0) 
+    ? number_format($product['Discount_Price'], 2) 
+    : null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Detail Page</title>
+    <title><?php echo htmlspecialchars($product['Name']); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -13,36 +45,28 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-xl font-bold">DOPE DIECAST</div>
             <nav class="flex space-x-4">
-                <a href="#" class="text-gray-600 hover:text-black">HOME</a>
-                <a href="#" class="text-gray-600 hover:text-black">SHOP</a>
+                <a href="./index.php" class="text-gray-600 hover:underline">HOME</a>
+                <a href="./pages/userdashboard.php" class="text-gray-600 hover:underline">ACCOUNT</a>
                 <a href="#" class="text-gray-600 hover:text-black">ABOUT</a>
                 <a href="#" class="text-gray-600 hover:text-black">CONTACT</a>
             </nav>
-            <div class="flex items-center space-x-4">
-                <button class="text-gray-600 hover:text-black"><i class="fas fa-search"></i></button>
-                <button class="text-gray-600 hover:text-black"><i class="fas fa-shopping-cart"></i></button>
-                <button class="text-gray-600 hover:text-black"><i class="fas fa-user"></i></button>
-            </div>
         </div>
     </header>
 
     <!-- Product Detail Section -->
     <main class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-semibold mb-6">Product Detail Page</h1>
+        <h1 class="text-2xl font-semibold mb-6"><?php echo htmlspecialchars($product['Name']); ?></h1>
         <div class="flex flex-col lg:flex-row items-start lg:space-x-10">
             <!-- Product Image -->
             <div class="w-full lg:w-1/2 bg-white p-4 rounded-lg shadow-md">
-                <img src="https://via.placeholder.com/400" alt="Product Image" class="w-full rounded-lg mb-4">
-                <div class="flex space-x-2">
-                    <img src="https://via.placeholder.com/80" alt="Thumbnail 1" class="w-20 h-20 object-cover rounded-lg">
-                    <img src="https://via.placeholder.com/80" alt="Thumbnail 2" class="w-20 h-20 object-cover rounded-lg">
-                </div>
+                <img src="<?php echo htmlspecialchars($product['Thumbnail_IMG']); ?>" alt="Product Image" class="w-full rounded-lg mb-4">
             </div>
 
             <!-- Product Details -->
             <div class="w-full lg:w-1/2 bg-white p-6 rounded-lg shadow-md">
-                <h2 class="text-xl font-bold mb-2">INNO64 1:64 Nissan GT-R50 By ITALDESIGN Black</h2>
-                <p class="text-lg text-gray-700 font-semibold mb-4">Rs. 7600.00</p>
+                <p class="text-lg text-gray-700 font-semibold mb-4">
+                    <?php echo "Rs. " . number_format($product['Price'], 2); ?>
+                </p>
 
                 <!-- Quantity Selector -->
                 <div class="flex items-center space-x-4 mb-6">
@@ -66,7 +90,7 @@
         <div class="bg-white p-6 mt-8 rounded-lg shadow-md">
             <h3 class="text-lg font-semibold mb-4">Description</h3>
             <p class="text-gray-700">
-                Introducing the INNO64 1:64 Nissan GT-R50 By ITALDESIGN in sleek black. This limited edition model features the exclusive GTR50 designation, representing the ultimate fusion of performance and luxury. Pre-order now to secure your piece of automotive history.
+                <?php echo htmlspecialchars($product['Description']); ?>
             </p>
         </div>
     </main>
