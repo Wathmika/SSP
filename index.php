@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,41 +51,46 @@
     <!-- Categories Section -->
     <section class="bg-white shadow mt-6 p-6">
     <h2 class="text-xl font-semibold mb-4">Categories</h2>
-    <div class="grid grid-cols-3 gap-4">
-        <?php
-        // Include database connection
-        include './utils/db.php'; // Adjust the path as needed
-
-        // Fetch unique categories from the Product table
-        $query = "SELECT DISTINCT Category FROM product WHERE Category IS NOT NULL AND Category != ''";
-        $result = $conn->query($query);
-
-        if ($result->num_rows > 0):
-            while ($row = $result->fetch_assoc()):
-        ?>
+    <div class="grid grid-cols-4 gap-4">
         <div class="border rounded p-4 text-center">
-            <img src="https://via.placeholder.com/100" alt="Category Image" class="h-24 mx-auto">
-            <p class="mt-2"><?= htmlspecialchars($row['Category']) ?></p>
-            <a href="shop.php?category=<?= urlencode($row['Category']) ?>" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-                View <?= htmlspecialchars($row['Category']) ?>
+            <img src="images/premium.jpg" alt="Premium" class="h-24 mx-auto">
+            <p class="mt-2 font-bold">Premium</p>
+            <a href="pages/shop.php?Category=Premium" 
+               class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                View Premium
             </a>
         </div>
-        <?php
-            endwhile;
-        else:
-        ?>
-        <p class="text-gray-500 col-span-3 text-center">No categories available.</p>
-        <?php endif; ?>
+        <div class="border rounded p-4 text-center">
+            <img src="images/hot_wheels.jpg" alt="Hot Wheels" class="h-24 mx-auto">
+            <p class="mt-2 font-bold">Hot Wheels</p>
+            <a href="pages/shop.php?Category=Hot Wheels"
+               class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                View Hot Wheels
+            </a>
+        </div>
+        <div class="border rounded p-4 text-center">
+            <img src="images/diorama.jpg" alt="Diorama" class="h-24 mx-auto">
+            <p class="mt-2 font-bold">Diorama</p>
+            <a href="pages/shop.php?Category=Diorama"
+               class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                View Diorama
+            </a>
+        </div>
+        <div class="border rounded p-4 text-center">
+            <img src="images/accessories.jpg" alt="Accessories" class="h-24 mx-auto">
+            <p class="mt-2 font-bold">Accessories</p>
+            <a href="pages/shop.php?Category=Accessories"
+               class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                View Accessories
+            </a>
+        </div>
     </div>
 </section>
 
-
     <!-- Sale Items Section -->
-    <?php
+    <<?php
 // Include your database connection
-include './utils/db.php'; // Adjust the path to your db.php file
-
-// Fetch all products from the Product table
+include './utils/db.php';
 $query = "SELECT ProductID, Name, Price, Thumbnail_IMG FROM Product";
 $result = $conn->query($query);
 
@@ -104,9 +112,15 @@ if ($result->num_rows > 0): ?>
             <p class="text-gray-600">$<?= number_format($row['Price'], 2) ?></p>
             
             <!-- Add to Cart Button -->
-            <button class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-                Add to Cart
-            </button>
+            <form action="/SSP/pages/cart.php" method="POST">
+    <input type="hidden" name="product_id" value="<?= $row['ProductID'] ?>">
+    <input type="hidden" name="price" value="<?= $row['Price'] ?>">
+    <button type="submit" class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+        Add to Cart
+    </button>
+</form>
+
+
         </div>
         <?php endwhile; ?>
     </div>
@@ -119,6 +133,10 @@ if ($result->num_rows > 0): ?>
 // Close the database connection
 $conn->close();
 ?>
+
+
+
+
 
 
 
@@ -146,17 +164,12 @@ $conn->close();
 </body>
 </html>
 
-<?php
-$title = "Home Page"; 
-include './utils/header.php'; 
-?>
+
 
 <head>
     <link rel="stylesheet" href="./src/output.css">
 </head>
 
-<body>
-    <h1 class="bg-blue-300">hutto</h1>
-</body>
+
 
 </html>
