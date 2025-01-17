@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the database connection
 include '../utils/db.php';
 
@@ -75,14 +76,18 @@ $discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price
                         <span>1</span>
                         <button class="px-2 text-gray-600">+</button>
                     </div>
-                    <button class="bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800">
-                        Add to cart
-                    </button>
+                    <form action="/SSP/pages/cart.php" method="POST">
+                        <input type="hidden" name="product_id" value="<?= $product['ProductID'] ?>">
+                        <input type="hidden" name="price" value="<?= $product['Price'] ?>">
+                        <button type="submit" class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                            Add to Cart
+                        </button>
+                    </form>
                 </div>
 
-                <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700">
+                <!-- <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700">
                     Buy Now
-                </button>
+                </button> -->
             </div>
         </div>
 

@@ -22,7 +22,7 @@
         </nav>
         <div class="flex items-center space-x-4">
             <input type="text" placeholder="Search" class="p-2 border rounded">
-            <a href="#" class="text-gray-600 hover:text-gray-900">🛒</a>
+            <a href="./pages/cart.php" class="text-gray-600 hover:text-gray-900">🛒</a>
         </div>
         <a href="./pages/loginregister.php">
                     <button class="bg-black text-white px-4 py-2 rounded">Logout</button>
@@ -124,12 +124,12 @@ if ($result->num_rows > 0): ?>
             
             <!-- Add to Cart Button -->
             <form action="/SSP/pages/cart.php" method="POST">
-    <input type="hidden" name="product_id" value="<?= $row['ProductID'] ?>">
-    <input type="hidden" name="price" value="<?= $row['Price'] ?>">
-    <button type="submit" class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-        Add to Cart
-    </button>
-</form>
+                <input type="hidden" name="product_id" value="<?= $row['ProductID'] ?>">
+                <input type="hidden" name="price" value="<?= $row['Price'] ?>">
+                <button type="submit" class="mt-2 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                    Add to Cart
+                </button>
+            </form>
 
 
         </div>

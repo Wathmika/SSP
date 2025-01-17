@@ -1,6 +1,7 @@
 <?php
 // Include the database connection file
 require '../utils/db.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +113,15 @@ require '../utils/db.php';
                 <div class="mt-6">
                     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" name="UpdateProduct">Update Product</button>
                 </div>
+                
             </form>
+            <form method="get" action="deletePhp.php">
+                <h1><legend><center>Delete</center></legend></h1>
+                <label>Product ID:</label><br>
+                <input type="text" name="deleteField" placeholder="Enter Product ID" required><br><br>
+                <input type="submit" name="delete" value="Remove Product">
+            </form>
+
         </div>
 
         <!-- Products Table -->
@@ -157,10 +166,10 @@ require '../utils/db.php';
                         <td class="py-3 px-4"><?php echo htmlspecialchars($row['Brand']); ?></td>
                         <td class="py-3 px-4 space-x-2">
                         <a href="productmanagement.php?delete=<?php echo htmlspecialchars($row['ProductID']); ?>" 
-                        class="text-red-500 hover:underline" 
-                        onclick="return confirm('Are you sure you want to delete this product?');">
-                        Delete
+                            onclick="return confirm('Are you sure you want to delete this product?');">
+                            Delete
                         </a>
+
 
                         </td>
                     </tr>
@@ -179,7 +188,7 @@ require '../utils/db.php';
 
     <?php
 // Include the database connection file
-require '../utils/db.php';
+// require '../utils/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['Addproduct'])) {
@@ -226,13 +235,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$conn->close(); // Close the database connection
+// $conn->close(); // Close the database connection
 
 
 
 
 // Include the database connection file
-require '../utils/db.php';
+// require '../utils/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['UpdateProduct'])) {
@@ -323,68 +332,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Display the message
         echo '<div class="message">' . htmlspecialchars($message) . '</div>';
     }
+    
+    
 
 
-    ob_start();
-
-    // if (session_status() === PHP_SESSION_NONE) {
-    //     session_start();
-    // }
-// Include the database connection file
-require '../utils/db.php';
-
-
-
-if (isset($_GET['delete'])) {
-    $productID = $_GET['delete'];
-
-    if (empty($productID) || !is_numeric($productID)) {
-        $_SESSION['message'] = "Invalid Product ID!";
-        header("Location: productmanagement.php");
-        exit();
-    }
-
-    $sqlCheck = "SELECT ProductID FROM product WHERE ProductID = ?";
-    $stmtCheck = $conn->prepare($sqlCheck);
-    if ($stmtCheck) {
-        $stmtCheck->bind_param("i", $productID);
-        $stmtCheck->execute();
-        $resultCheck = $stmtCheck->get_result();
-
-        if ($resultCheck->num_rows === 0) {
-            $_SESSION['message'] = "Product ID does not exist!";
-            $stmtCheck->close();
-            header("Location: productmanagement.php");
-            exit();
-        }
-        $stmtCheck->close();
-    } else {
-        $_SESSION['message'] = "Error preparing check statement: " . $conn->error;
-        header("Location: productmanagement.php");
-        exit();
-    }
-
-    $sql = "DELETE FROM product WHERE ProductID = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        $stmt->bind_param("i", $productID);
-        if ($stmt->execute()) {
-            $_SESSION['message'] = "Product deleted successfully!";
-        } else {
-            $_SESSION['message'] = "Error executing DELETE query: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        $_SESSION['message'] = "Error preparing DELETE statement: " . $conn->error;
-    }
-} else {
-    $_SESSION['message'] = "No Product ID provided!";
-}
-
-// $conn->close();
-// header("Location: productmanagement.php");
-exit();
+	
 
 
 
