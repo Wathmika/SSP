@@ -23,12 +23,14 @@ if (!$result) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($category) ?> Products</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 font-sans">
 
     <!-- Header -->
@@ -52,20 +54,18 @@ if (!$result) {
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <?php if ($result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="bg-white shadow-md rounded-lg p-4">
-                    <!-- Product Image -->
-                    <img src="images/<?= htmlspecialchars($row['Thumbnail_IMG']) ?>" 
-                         alt="<?= htmlspecialchars($row['Name']) ?>" 
-                         class="w-full h-40 object-cover mb-4 rounded-lg">
-                    <!-- Product Name -->
-                    <h3 class="text-md font-semibold mb-2"><?= htmlspecialchars($row['Name']) ?></h3>
-                    <!-- Product Price -->
-                    <p class="text-lg font-bold text-gray-800">$<?= number_format($row['Price'], 2) ?></p>
-                    <!-- Add to Cart Button -->
-                    <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
-                        Add to cart
-                    </button>
-                </div>
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <!-- Product Image -->
+                        <img src="<?php echo htmlspecialchars($row['Thumbnail_IMG']); ?>" class="w-20 h-20 mr-4" alt="Product.Thumbnail_IMG">
+                        <!-- Product Name -->
+                        <h3 class="text-md font-semibold mb-2"><?= htmlspecialchars($row['Name']) ?></h3>
+                        <!-- Product Price -->
+                        <p class="text-lg font-bold text-gray-800">$<?= number_format($row['Price'], 2) ?></p>
+                        <!-- Add to Cart Button -->
+                        <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+                            Add to cart
+                        </button>
+                    </div>
                 <?php endwhile; ?>
             <?php else: ?>
                 <p class="text-gray-600 text-center">No products found in the <?= htmlspecialchars($category) ?> category.</p>
@@ -78,6 +78,7 @@ if (!$result) {
         <p class="text-sm text-gray-500">© 2024 Dope Diecast. All rights reserved.</p>
     </footer>
 </body>
+
 </html>
 
 <?php

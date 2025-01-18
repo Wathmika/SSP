@@ -3,10 +3,11 @@ session_start();
 include '../utils/db.php'; // Include the database connection
 
 // Simulate logged-in user ID (use actual session/user logic in a real application)
-$UserId = $_SESSION['user_id'] ;  // Example user ID
+$UserId = $_SESSION['user_id'];  // Example user ID
 
 // Fetch user details function
-function fetchUserDetails($conn, $UserId) {
+function fetchUserDetails($conn, $UserId)
+{
     $sql = "SELECT Name, Email, Phone_Number FROM user WHERE UserID = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('i', $UserId);
@@ -54,29 +55,28 @@ if (isset($_POST['btnupdate'])) {
     } else {
         echo "<p class='text-red-500'>Failed to update account: " . $conn->error . "</p>";
     }
-session_start();
+    session_start();
 
-// Destroy all session data
-session_unset();
-session_destroy();
+    // Destroy all session data
+    session_unset();
+    session_destroy();
 
-// Redirect to login page (or homepage)
-header("Location: ./loginregister.php");
-exit();
-
-
-    
+    // Redirect to login page (or homepage)
+    header("Location: ./loginregister.php");
+    exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
     <header class="bg-gray-800 text-white py-4">
         <div class="container mx-auto flex justify-between items-center">
@@ -106,59 +106,58 @@ exit();
                 </a>
 
             </div>
-            <p class="mt-2">Hello! <?php 
-        echo  $_SESSION['username'];
-        ?></p>
+            <p class="mt-2">Hello! <?php
+                                    echo  $_SESSION['username'];
+                                    ?></p>
 
         </section>
 
-<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    <h2 class="text-xl font-bold mb-4">Orders</h2>
-    <table class="min-w-full bg-white">
-        <thead>
-            <tr>
-                <th class="py-2 px-4 border-b">Order ID</th>
-                <th class="py-2 px-4 border-b">User ID</th>
-                <th class="py-2 px-4 border-b">Total Amount</th>
-                <th class="py-2 px-4 border-b">Status</th>
-                <th class="py-2 px-4 border-b">Shipping Address</th>
-                <th class="py-2 px-4 border-b">Order Date</th>
-                <th class="py-2 px-4 border-b">Delivery Fee</th>
-                <th class="py-2 px-4 text-left">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
-// Fetch orders from the database for the logged-in user
-$sql = "SELECT * FROM `Order` WHERE User_ID = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $UserId);
-$stmt->execute();
-$result = $stmt->get_result();
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-xl font-bold mb-4">Orders</h2>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border-b">Order ID</th>
+                        <th class="py-2 px-4 border-b">User ID</th>
+                        <th class="py-2 px-4 border-b">Total Amount</th>
+                        <th class="py-2 px-4 border-b">Status</th>
+                        <th class="py-2 px-4 border-b">Shipping Address</th>
+                        <th class="py-2 px-4 border-b">Order Date</th>
+                        <th class="py-2 px-4 border-b">Delivery Fee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Fetch orders from the database for the logged-in user
+                    $sql = "SELECT * FROM `Order` WHERE User_ID = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param('i', $UserId);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
 
-if ($result && $result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr class='text-center border-b'>";
-        echo "<td class='py-2 px-4'>{$row['Order_ID']}</td>";
-        echo "<td class='py-2 px-4'>{$row['User_ID']}</td>";
-        echo "<td class='py-2 px-4'>\${$row['TotalAmount']}</td>";
-        echo "<td class='py-2 px-4'>{$row['Status']}</td>";
-        echo "<td class='py-2 px-4'>{$row['ShippingAddress']}</td>";
-        echo "<td class='py-2 px-4'>{$row['OrderDate']}</td>";
-        echo "<td class='py-2 px-4'>\${$row['Delivery_Fee']}</td>";
-        echo "</tr>";
-    }
-} else {
-    echo "<tr><td colspan='7' class='py-2 px-4 text-center'>No orders found</td></tr>";
-}
+                    if ($result && $result->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr class='text-center border-b'>";
+                            echo "<td class='py-2 px-4'>{$row['Order_ID']}</td>";
+                            echo "<td class='py-2 px-4'>{$row['User_ID']}</td>";
+                            echo "<td class='py-2 px-4'>\${$row['TotalAmount']}</td>";
+                            echo "<td class='py-2 px-4'>{$row['Status']}</td>";
+                            echo "<td class='py-2 px-4'>{$row['ShippingAddress']}</td>";
+                            echo "<td class='py-2 px-4'>{$row['OrderDate']}</td>";
+                            echo "<td class='py-2 px-4'>\${$row['Delivery_Fee']}</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7' class='py-2 px-4 text-center'>No orders found</td></tr>";
+                    }
 
-$stmt->close(); // Close the prepared statement
-$conn->close(); // Close the database connection
-?>
-        </tbody>
-    </table>
-</div>
+                    $stmt->close(); // Close the prepared statement
+                    $conn->close(); // Close the database connection
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
         <section class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-white p-6 rounded shadow">
@@ -195,7 +194,7 @@ $conn->close(); // Close the database connection
                     <input type="text" name="phone" value="<?php echo htmlspecialchars($user['Phone_Number']); ?>" class="w-full mt-1 p-2 border border-gray-300 rounded" required />
                 </div>
                 <div class="md:col-span-2">
-                    <button name = "btnupdate" type="submit" class="bg-black text-white px-4 py-2 rounded ">Save Changes</button>
+                    <button name="btnupdate" type="submit" class="bg-black text-white px-4 py-2 rounded ">Save Changes</button>
                 </div>
             </form>
         </section>
@@ -212,4 +211,5 @@ $conn->close(); // Close the database connection
         </div>
     </footer>
 </body>
+
 </html>

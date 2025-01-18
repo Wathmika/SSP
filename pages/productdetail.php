@@ -26,19 +26,21 @@ $thumbnail = !empty($product['Thumbnail_IMG']) ? $product['Thumbnail_IMG'] : 'de
 
 // Format prices
 $price = number_format($product['Price'], 2);
-$discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price'] > 0) 
-    ? number_format($product['Discount_Price'], 2) 
+$discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price'] > 0)
+    ? number_format($product['Discount_Price'], 2)
     : null;
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['Name']); ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 font-sans">
 
     <!-- Header -->
@@ -71,11 +73,7 @@ $discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price
 
                 <!-- Quantity Selector -->
                 <div class="flex items-center space-x-4 mb-6">
-                    <div class="flex items-center space-x-2 border border-gray-300 p-2 rounded-lg">
-                        <button class="px-2 text-gray-600">-</button>
-                        <span>1</span>
-                        <button class="px-2 text-gray-600">+</button>
-                    </div>
+
                     <form action="/SSP/pages/cart.php" method="POST">
                         <input type="hidden" name="product_id" value="<?= $product['ProductID'] ?>">
                         <input type="hidden" name="price" value="<?= $product['Price'] ?>">
@@ -106,4 +104,5 @@ $discountPrice = (!empty($product['Discount_Price']) && $product['Discount_Price
     </footer>
 
 </body>
+
 </html>
