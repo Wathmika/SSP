@@ -22,8 +22,13 @@ session_start();
                     <span class="font-bold text-xl">Dope Diecast</span>
                 </div>
                 <div class="flex items-center">
-                    <button class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Admin Dashboard</button>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded">Logout</button>
+                    <a href="./admin.php">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Admin Dashboard</button>
+                    </a>
+                    <a href="./loginregister.php">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded">Logout</button>
+                    </a>
+
                 </div>
             </div>
         </nav>
