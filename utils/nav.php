@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-300">
     <!-- Header Section -->
     <header class="bg-black py-4">
@@ -15,8 +17,7 @@
                 <input
                     type="text"
                     placeholder="Search"
-                    class="px-4 py-2 rounded-l border border-gray-400 w-full md:w-64"
-                />
+                    class="px-4 py-2 rounded-l border border-gray-400 w-full md:w-64" />
                 <button class="px-3 py-2 bg-white rounded-r border border-gray-400 hover:bg-gray-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z" clip-rule="evenodd" />
@@ -48,12 +49,13 @@
         <!-- Navigation Menu -->
         <nav class="bg-black mt-4">
             <ul class="flex justify-center space-x-8 py-2 text-sm font-medium text-white">
-                <li class="hover:text-gray-300"><a href="#">HOME</a></li>
-                <li class="hover:text-gray-300"><a href="#">SHOP</a></li>
-                <li class="hover:text-gray-300"><a href="#">ABOUT</a></li>
-                <li class="hover:text-gray-300"><a href="#">CONTACT</a></li>
+                <li class="hover:text-gray-300"><a href="../index.php">HOME</a></li>
+                <li class="hover:text-gray-300"><a href="../index.php">SHOP</a></li>
+                <li class="hover:text-gray-300"><a href="../pages/about.php">ABOUT</a></li>
+                <li class="hover:text-gray-300"><a href="../pages/contact.php">CONTACT</a></li>
             </ul>
         </nav>
     </header>
 </body>
+
 </html>

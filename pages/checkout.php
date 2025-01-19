@@ -20,6 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("All fields are required.");
     }
 
+
     // Get cart items from session
     $cart_items = $_SESSION['cart_items'] ?? [];
     if (empty($cart_items)) {

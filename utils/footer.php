@@ -1,117 +1,96 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Footer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
-<section class="py-10">
-  <div class="container mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-    <div class="flex items-center space-x-4">
-      <img src="assets/imgs/theme/icons/icon-1.svg" alt="" class="w-12 h-12">
-      <div>
-        <h3 class="text-lg font-semibold">Best prices & offers</h3>
-        <p class="text-sm text-gray-600">Orders $50 or more</p>
-      </div>
+
+  <!-- Hero Section -->
+  <div class="relative bg-black text-white py-16 px-6 text-center h-[300px]">
+    <div>
+      <img src="https://preview.redd.it/tried-creating-my-own-wallpaper-featuring-the-lb-super-v0-p80j0hjbqtea1.jpg?width=1080&crop=smart&auto=webp&s=6cb278e795668c56c91e818dedbc96c253e08b5f" alt="Car Image" class=" h-[200px] object-cover">
     </div>
-    <div class="flex items-center space-x-4">
-      <img src="assets/imgs/theme/icons/icon-2.svg" alt="" class="w-12 h-12">
-      <div>
-        <h3 class="text-lg font-semibold">Free delivery</h3>
-        <p class="text-sm text-gray-600">24/7 amazing services</p>
-      </div>
-    </div>
-    <div class="flex items-center space-x-4">
-      <img src="assets/imgs/theme/icons/icon-3.svg" alt="" class="w-12 h-12">
-      <div>
-        <h3 class="text-lg font-semibold">Great daily deal</h3>
-        <p class="text-sm text-gray-600">When you sign up</p>
-      </div>
-    </div>
-    <div class="flex items-center space-x-4">
-      <img src="assets/imgs/theme/icons/icon-4.svg" alt="" class="w-12 h-12">
-      <div>
-        <h3 class="text-lg font-semibold">Wide assortment</h3>
-        <p class="text-sm text-gray-600">Mega Discounts</p>
-      </div>
-    </div>
-    <div class="flex items-center space-x-4">
-      <img src="assets/imgs/theme/icons/icon-5.svg" alt="" class="w-12 h-12">
-      <div>
-        <h3 class="text-lg font-semibold">Easy returns</h3>
-        <p class="text-sm text-gray-600">Within 30 days</p>
+    <div class="absolute inset-0 flex flex-col justify-center items-center">
+      <h2 class="text-2xl font-bold">Subscribe to our emails</h2>
+      <p class="text-sm">Stay tuned to receive the latest Diecast new releases and promotions</p>
+      <div class="mt-4 flex">
+        <input type="email" placeholder="Email" class="px-4 py-2 rounded-l-md text-black outline-none">
+        <button class="bg-black text-white px-4 py-2 rounded-r-md">➤</button>
       </div>
     </div>
   </div>
-</section>
 
-<section class="bg-gray-100 py-10">
-  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-    <div>
-      <img src="assets/imgs/theme/logo.svg" alt="logo" class="mb-6">
-      <p class="text-gray-700">Awesome grocery store website template</p>
-      <ul class="mt-4 space-y-2 text-gray-600">
-        <li><span class="font-bold">Address:</span> 5171 W Campbell Ave undefined Kent, Utah 53127 United States</li>
-        <li><span class="font-bold">Call Us:</span> (+91) - 540-025-124553</li>
-        <li><span class="font-bold">Email:</span> sale@Nest.com</li>
-        <li><span class="font-bold">Hours:</span> 10:00 - 18:00, Mon - Sat</li>
-      </ul>
+  <!-- Features Section -->
+  <div class="grid grid-cols-4 gap-4 px-10 py-8 bg-gray-200 text-center">
+    <div class="flex flex-col items-center p-4 bg-white shadow rounded">
+      <span class="text-3xl">🏷️</span>
+      <p class="font-semibold">Best prices</p>
     </div>
-
-    <div>
-      <h4 class="text-lg font-semibold mb-4">Company</h4>
-      <ul class="space-y-2 text-gray-600">
-        <li><a href="#" class="hover:text-gray-900">About Us</a></li>
-        <li><a href="#" class="hover:text-gray-900">Delivery Information</a></li>
-        <li><a href="#" class="hover:text-gray-900">Privacy Policy</a></li>
-        <li><a href="#" class="hover:text-gray-900">Terms & Conditions</a></li>
-        <li><a href="#" class="hover:text-gray-900">Contact Us</a></li>
-        <li><a href="#" class="hover:text-gray-900">Support Center</a></li>
-        <li><a href="#" class="hover:text-gray-900">Careers</a></li>
-      </ul>
+    <div class="flex flex-col items-center p-4 bg-white shadow rounded">
+      <span class="text-3xl">🚚</span>
+      <p class="font-semibold">Free delivery</p>
     </div>
-
-    <div>
-      <h4 class="text-lg font-semibold mb-4">Account</h4>
-      <ul class="space-y-2 text-gray-600">
-        <li><a href="#" class="hover:text-gray-900">Sign In</a></li>
-        <li><a href="#" class="hover:text-gray-900">View Cart</a></li>
-        <li><a href="#" class="hover:text-gray-900">My Wishlist</a></li>
-        <li><a href="#" class="hover:text-gray-900">Track My Order</a></li>
-        <li><a href="#" class="hover:text-gray-900">Help Ticket</a></li>
-        <li><a href="#" class="hover:text-gray-900">Shipping Details</a></li>
-        <li><a href="#" class="hover:text-gray-900">Compare Products</a></li>
-      </ul>
+    <div class="flex flex-col items-center p-4 bg-white shadow rounded">
+      <span class="text-3xl">📦</span>
+      <p class="font-semibold">Easy Return</p>
     </div>
-
-    <div>
-      <h4 class="text-lg font-semibold mb-4">Corporate</h4>
-      <ul class="space-y-2 text-gray-600">
-        <li><a href="#" class="hover:text-gray-900">Become a Vendor</a></li>
-        <li><a href="#" class="hover:text-gray-900">Affiliate Program</a></li>
-        <li><a href="#" class="hover:text-gray-900">Farm Business</a></li>
-        <li><a href="#" class="hover:text-gray-900">Farm Careers</a></li>
-        <li><a href="#" class="hover:text-gray-900">Our Suppliers</a></li>
-        <li><a href="#" class="hover:text-gray-900">Accessibility</a></li>
-        <li><a href="#" class="hover:text-gray-900">Promotions</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-lg font-semibold mb-4">Popular</h4>
-      <ul class="space-y-2 text-gray-600">
-        <li><a href="#" class="hover:text-gray-900">Milk & Flavoured Milk</a></li>
-        <li><a href="#" class="hover:text-gray-900">Butter and Margarine</a></li>
-        <li><a href="#" class="hover:text-gray-900">Eggs Substitutes</a></li>
-        <li><a href="#" class="hover:text-gray-900">Marmalades</a></li>
-        <li><a href="#" class="hover:text-gray-900">Sour Cream and Dips</a></li>
-        <li><a href="#" class="hover:text-gray-900">Tea & Kombucha</a></li>
-        <li><a href="#" class="hover:text-gray-900">Cheese</a></li>
-      </ul>
+    <div class="flex flex-col items-center p-4 bg-white shadow rounded">
+      <span class="text-3xl">📝</span>
+      <p class="font-semibold">Great daily deal</p>
     </div>
   </div>
-</section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-10 px-10">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start">
+      <!-- Brand and Socials -->
+      <div class="w-1/3">
+        <h3 class="text-lg font-bold">Dope Diecast</h3>
+        <p class="text-sm mt-2">Your one-stop shop for the best diecast models.</p>
+        <div class="flex space-x-3 mt-3">
+          <span class="text-xl">📷</span>
+          <span class="text-xl">🎥</span>
+          <span class="text-xl">💼</span>
+          <span class="text-xl">📱</span>
+        </div>
+      </div>
+
+      <!-- Quick Links (Center) -->
+      <div class="w-1/3 text-center">
+        <h4 class="font-semibold mb-2">Quick Links</h4>
+        <ul class="space-y-1 text-sm">
+          <li class="hover:text-gray-300"><a href="../index.php">HOME</a></li>
+          <li class="hover:text-gray-300"><a href="../index.php">SHOP</a></li>
+          <li class="hover:text-gray-300"><a href="../pages/about.php">ABOUT</a></li>
+          <li class="hover:text-gray-300"><a href="../pages/contact.php">CONTACT</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Us (Right) -->
+      <div class="w-1/3 text-right">
+        <h4 class="font-semibold mb-2">Contact Us</h4>
+        <p class="text-sm">164/3/G, Himbutana Lane, Mulleriyawa</p>
+        <p class="text-sm">Email: wathmikasilva@gmail.com</p>
+        <p class="text-sm">Phone: +94776892573</p>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center text-sm border-t border-gray-700 mt-6 pt-4">
+      <p>&copy; 2025 Dope Diecast. All rights reserved.</p>
+    </div>
+  </footer>
+  </section>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+require '../utils/header.php';
 include '../utils/db.php';
 
 // Ensure user is logged in
@@ -398,6 +399,9 @@ updateCartSession($conn, $cart_id);
             <p class="text-gray-600 text-center mt-6">Your cart is empty.</p>
         <?php endif; ?>
     </main>
+    <?php
+    require '../utils/footer.php';
+    ?>
 </body>
 
 </html>

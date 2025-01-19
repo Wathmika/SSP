@@ -118,31 +118,6 @@
                 </tbody>
             </table>
         </div>
-
-
-        <!-- Sales Table -->
-        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <h2 class="text-xl font-bold mb-4">Sales</h2>
-            <table class="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th class="py-2">Order ID</th>
-                        <th class="py-2">Augurt</th>
-                        <th class="py-2">Status</th>
-                        <th class="py-2">Principleetri</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Example Row -->
-                    <tr class="text-center">
-                        <td class="py-2">101</td>
-                        <td class="py-2">Aug123</td>
-                        <td class="py-2">Completed</td>
-                        <td class="py-2">Princ123</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </body>
 
